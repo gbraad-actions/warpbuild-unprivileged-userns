@@ -8,6 +8,7 @@ runs:
     - name: Allow unprivileged userns (workaround)
       if: ${{ startsWith(runner.name, 'warp-') }}
       run: |
+        sudo apt-get update
         sudo apt-get install apparmor-profiles
         sudo ln -s /etc/apparmor.d/unprivileged_userns /etc/apparmor.d/disable/
         sudo apparmor_parser -r /etc/apparmor.d/unprivileged_userns
