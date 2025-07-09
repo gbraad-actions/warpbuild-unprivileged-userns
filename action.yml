@@ -10,6 +10,6 @@ runs:
       run: |
         sudo apt-get update
         sudo apt-get install apparmor-profiles
-        sudo ln -s /etc/apparmor.d/unprivileged_userns /etc/apparmor.d/disable/
+        sudo mv /etc/apparmor.d/disable/unprivileged_userns /etc/apparmor.d/
         sudo apparmor_parser -r /etc/apparmor.d/unprivileged_userns
       shell: bash
