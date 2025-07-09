@@ -10,6 +10,20 @@ runs:
       run: |
         sudo apt-get update
         sudo apt-get install apparmor-profiles
-        sudo mv /etc/apparmor.d/disable/unprivileged_userns /etc/apparmor.d/
+        sudo tee /etc/apparmor.d/unprivileged_userns > /dev/null <<'EOF'
+        #include <tunables/global>
+        profile unprivileged_userns flags=(attach_disconnected,mediate_deleted) {
+          #include <abstractions/base>
+          capability,
+          mount,
+          umount,
+          file,
+          network,
+          signal,
+          ptrace,
+          unix,
+          pivot_root,
+        }
+        EOF
         sudo apparmor_parser -r /etc/apparmor.d/unprivileged_userns
       shell: bash
